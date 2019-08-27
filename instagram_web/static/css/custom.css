@@ -1,0 +1,36 @@
+/*flash message*/
+.error{
+    background-color: rgba(248, 188, 207, 0.5);
+    color: firebrick;
+    opacity: 0.7;
+    border-radius: 0;
+  }
+.success{
+    background-color: papayawhip;
+    color: rgb(63, 63, 68);
+    opacity: 0.7;
+    border-radius: 0;
+  }
+
+/*fonts*/
+#title{
+    font-family: 'Leckerli One', cursive;
+    font-size: 30px;
+}
+body{
+    font-family: 'Ubuntu';
+}
+.header{
+    font-weight: 700;
+    font-style: italic;
+}
+.errtext{
+  color: rgb(148, 149, 151);
+}
+
+/*error page*/
+#errpage{
+  background-color: #E9E9E1;
+  height: 87%;
+  width: 100%;
+}
