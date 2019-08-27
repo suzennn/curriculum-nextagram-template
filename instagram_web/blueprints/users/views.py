@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, flash
+from flask import Blueprint, render_template, request, redirect, flash, session
 from models import *
 from werkzeug.security import check_password_hash
 
@@ -29,7 +29,7 @@ def create():
 def login():
     return render_template('users/login.html')
 
-# @users_blueprint.route('/login', method=["POST"])
+@users_blueprint.route('/login', methods=["POST"])
 def login_user():
     try:
         user.User.get(user.User.username == request.form['userlogin'])
@@ -37,12 +37,22 @@ def login_user():
         pwd_check = request.form['pwdlogin']
         result = check_password_hash(user_check.password,pwd_check)
         if result:
+            session["logged_in"] = True
+            session["user_id"] = user_check.id
             flash("Login successful! Welcome back~","success")
+            return redirect("/")
         else:
             flash("password is incorrect. please try again","error")
+            return render_template("users/login.html")
     except:
         flash("user does not exist","error")
         return render_template("users/login.html")
+
+@users_blueprint.route('/logout')
+def logout():
+    session["logged_in"] = False
+    flash("Logout successful! See you next time~","success")
+    return redirect("/")
 
 @users_blueprint.route('/<username>', methods=["GET"])
 def show(username):

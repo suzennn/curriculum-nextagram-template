@@ -2,7 +2,7 @@
 {% block content %}
 <div class='mx-4 my-2'>
     <h3 class="header">Login</h3>
-    <form action="{{ url_for("users.create") }}" method="post">
+    <form action="{{ url_for("users.login_user") }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
         <div class="form-group">
             <label for="userlogin">Username:</label>
