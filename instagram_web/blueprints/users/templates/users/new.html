@@ -1,32 +1,30 @@
 {% extends "_layout.html" %}
 {% block content %}
-<div class='mx-4 my-2'>
-    <h3 class="header">New User</h3>
-    <form action="{{ url_for("users.create") }}" method="post">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" name="name" placeholder="enter your name..." class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" name="username" placeholder="enter your username..." class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="Email">Email:</label>
-            <input type="email" name="email" placeholder="enter your email..." class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" name="password" placeholder="enter your password..." class="form-control"/>
-            <small id="pwdreq" class="form-text text-muted">password must be at least 6 characters and have a combination of uppercase & lowercase letters, numerals and symbols</small>
-        </div>
-        <div class="form-group">
-            <label for="confirmpwd">Confirm Password:</label>
-            <input type="password" name="confirmpwd" placeholder="please confirm your password..." class="form-control"/>
-            <small id="pwdreq" class="form-text text-muted">field must match password field</small>
-        </div>
-        <button type='submit' class='btn btn-info'>Sign Up</button>
-    </form>
+<div class="d-inline-flex justify-content-center w-100 h-100">
+    <div class='my-5 formContainer d-inline-flex flex-wrap align-items-center'>
+        <h3 class="header text-center w-100 mb-4">Sign Up</h3>
+        <form action="{{ url_for("users.create") }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <div class="form-group">
+                <input type="text" name="name" placeholder="Name" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input type="text" name="username" placeholder="Username" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Email" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" placeholder="Password" class="form-control"/>
+                <small id="pwdreq" class="form-text text-muted">password must be at least 6 characters and have a combination of uppercase & lowercase letters, numerals and symbols</small>
+            </div>
+            <div class="form-group">
+                <input type="password" name="confirmpwd" placeholder="Confirm Password" class="form-control"/>
+                <small id="pwdreq" class="form-text text-muted">field must match password field</small>
+            </div>
+            <br>
+            <button type='submit' class='btn btn-info btn-color w-100'>Sign Up</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

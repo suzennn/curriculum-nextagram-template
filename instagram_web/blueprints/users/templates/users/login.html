@@ -1,18 +1,19 @@
 {% extends "_layout.html" %}
 {% block content %}
-<div class='mx-4 my-2'>
-    <h3 class="header">Login</h3>
-    <form action="{{ url_for("users.login_user") }}" method="post">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-        <div class="form-group">
-            <label for="userlogin">Username:</label>
-            <input type="text" name="userlogin" placeholder="enter your username..." class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="pwdlogin">Password:</label>
-            <input type="password" name="pwdlogin" placeholder="enter your password..." class="form-control"/>
-        </div>
-        <button type='submit' class='btn btn-info'>Login</button>
-    </form>
+<div class="d-inline-flex justify-content-center w-100 h-100">
+    <div class='my-5 formContainer d-inline-flex flex-wrap align-items-center'>
+        <h3 class="header mb-1 text-center w-100">Login</h3>
+        <form class="w-100" action="{{ url_for("users.login_user_check") }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <div class="form-group w-100">
+                <input type="text" name="userlogin" placeholder="Username" class="form-control"/>
+            </div>
+            <div class="form-group w-100">
+                <input type="password" name="pwdlogin" placeholder="Password" class="form-control"/>
+            </div>
+            <br>
+            <button type='submit' class='btn btn-info btn-color w-100'>Login</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

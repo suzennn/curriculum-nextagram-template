@@ -5,6 +5,14 @@
 {% block header %}
 {% endblock %}
 {% block content %}
-<h1 class="header">Homepage</h1>
+<div class="container-fluid">
+  <div class="d-flex justify-content-center">
+    {% if current_user.is_authenticated %}
+    <h1 class="header mt-3">Welcome, <span style="color:rgb(142, 209, 147)">{{current_user.name}}</span>!</h1>
+    {% else %}
+    <h1 class="header mt-3">Homepage</h1>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}
 

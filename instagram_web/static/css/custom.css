@@ -27,10 +27,40 @@ body{
 .errtext{
   color: rgb(148, 149, 151);
 }
+.btn-color{
+  background-color:rgb(130, 211, 181);
+  border: rgb(130, 211, 181);
+  font-weight: bold;
+}
+.btn-color:hover{ 
+  background-color:rgb(78, 163, 132);
+}
 
 /*error page*/
 #errpage{
   background-color: #E9E9E1;
   height: 87%;
   width: 100%;
+}
+.btn-err{
+  background-color: rgb(163, 204, 235);
+  border: rgb(163, 204, 235);
+}
+.btn-err:hover{
+  background-color: rgb(126, 187, 233);
+  border: rgb(126, 187, 233);
+}
+.link-to-home:hover{
+  text-decoration: none;
+  color: white;
+}
+
+/*form container*/
+.formContainer{
+  height: 50%;
+  width: 50%;
+  /* display: inline-flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border: 1px solid black; */
 }
