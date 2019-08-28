@@ -1,9 +1,20 @@
 {% extends "_layout.html" %}
 {% block content %}
-<div class="container-fluid d-inline-flex justify-content-between border py-2 w-100">
-    <h6 class="font-weight-bold pt-1">{{current_user.username}}</h6>
-    <a href="#">
-        <img height="30px" width="30px" src="https://icon-library.net/images/settings-icon-png/settings-icon-png-24.jpg">
-    </a>
+<div class="container mt-5">
+    <div class="d-inline-flex border p-2 w-100 h-100">
+        <div class="col-md-3 d-flex justify-content-center border">
+            <div class="rounded-circle bg-dark" height="100px" width="100px">
+                Help
+            </div>
+        </div>
+        <div class="col-md-8 border">
+            <h6 class="font-weight-bold pt-1">{{current_user.username}}</h6>
+        </div>
+        <div class="col-md-1 d-flex justify-content-center border ">
+            <a href="/users/{{current_user.id}}/edit">          <!--Find out how to do this using url_for('')-->
+                <img height="30px" width="30px" src="https://icon-library.net/images/settings-icon-png/settings-icon-png-24.jpg">
+            </a>
+        </div>
+    </div>
 </div>
 {% endblock %}

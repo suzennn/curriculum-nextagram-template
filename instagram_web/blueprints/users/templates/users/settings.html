@@ -1,0 +1,32 @@
+{% extends "_layout.html" %}
+{% block content %}
+<div class="container-fluid d-inline-flex justify-content-center align-items-center w-100 heightContainer">
+    <div class="card w-50 mt-1">
+        <div class="card-body">
+            <h5 class="card-title font-weight-bold">{{current_user.username}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Edit Profile</h6>
+            <form action="/users/{{current_user.id}}" method="post">       
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <div class="form-group w-100">
+                    <label for="name_edit">Name</label>
+                    <input type="text" name="name_edit" placeholder="type name..." value="{{current_user.name}}" class="form-control"/>
+                </div>
+                <div class="form-group w-100">
+                    <label for="username_edit">Username</label>
+                    <input type="text" name="username_edit" placeholder="type username..." value="{{current_user.username}}" class="form-control"/>
+                </div>
+                <div class="form-group w-100">
+                    <label for="bio_edit">Bio</label>
+                    <input type="text" name="bio_edit" placeholder="type bio..." value="{{current_user.bio}}" class="form-control"/>
+                </div>
+                <div class="form-group w-100">
+                    <label for="email_edit">Email</label>
+                    <input type="text" name="email_edit" placeholder="type email..." value="{{current_user.email}}" class="form-control"/>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-danger">Confirm Changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

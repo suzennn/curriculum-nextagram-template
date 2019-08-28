@@ -59,8 +59,7 @@ body{
 .formContainer{
   height: 50%;
   width: 50%;
-  /* display: inline-flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  border: 1px solid black; */
+}
+.heightContainer{
+  height: 87%;
 }

@@ -1,5 +1,5 @@
 from app import app
-from flask import Blueprint, render_template, request, redirect, flash, session
+from flask import Blueprint, render_template, request, redirect, flash, session, url_for
 from models import *
 from werkzeug.security import check_password_hash
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required, UserMixin
@@ -62,7 +62,7 @@ def logout():
     logout_user()
     return redirect("/")
 
-@users_blueprint.route('/profile/<user_id>')
+@users_blueprint.route('/<user_id>')
 @login_required
 def profile(user_id):
     return render_template("users/profile.html")
@@ -76,15 +76,37 @@ def show(username):
 def index():
     return "USERS"
 
-
 @users_blueprint.route('/<id>/edit', methods=['GET'])
+@login_required
 def edit(id):
-    pass
-
+    check_user = user.User.get_by_id(id)
+    return render_template('users/settings.html')
 
 @users_blueprint.route('/<id>', methods=['POST'])
+@login_required
 def update(id):
-    pass
+    check_user = user.User.get_by_id(id)
+    if check_user.name == request.form["name_edit"] and check_user.username == request.form["username_edit"] and check_user.bio == request.form["bio_edit"] and check_user.email == request.form["email_edit"]:
+        flash("nothing has been changed","error")
+        return redirect(f"/users/{id}/edit")
+    else:
+        if check_user.name != request.form["name_edit"]:
+            check_user.name = request.form["name_edit"]
+        if check_user.username != request.form["username_edit"]:
+            check_user.username = request.form["username_edit"]
+        if check_user.bio != request.form["bio_edit"]:
+            check_user.bio = request.form["bio_edit"]
+        if check_user.email != request.form["email_edit"]:
+            check_user.email = request.form["email_edit"]
+    
+    try:
+        if check_user.save():
+            flash("profile has been successfully updated", "success")
+            return redirect(url_for("users.profile",user_id=check_user.id))
+    except:
+        flash('<br>'.join(check_user.errors),'error')
+        return render_template("users/settings.html",errors=check_user.errors)
+
 
 @login_manager.unauthorized_handler
 def unauthorized_callback():
