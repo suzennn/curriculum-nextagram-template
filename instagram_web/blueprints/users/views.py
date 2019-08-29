@@ -111,7 +111,7 @@ def upload_form(user_id):
 @login_required
 def upload(user_id):
     try:
-        imgupload()
+        imgupload("profile-pic")
         check_user = user.User.get_by_id(user_id)
         file = request.files.get('user_file').filename
         check_user.dp = file
@@ -121,6 +121,26 @@ def upload(user_id):
     except:
         flash("Something went wrong. Please try again!","error")
         return render_template('users/uploadimg.html')
+
+@users_blueprint.route('/upload-image/<user_id>')
+@login_required
+def upload_img_form(user_id):
+    return render_template('users/uploadimages.html')
+
+@users_blueprint.route('/upload-image/<user_id>',methods=['POST'])
+@login_required
+def upload_img(user_id):
+    # try:
+    imgupload("user-images")
+    check_user = user.User.get(user.User.id == current_user.id)
+    file = request.files.get('user_file').filename
+    img = images.Image(path=file, user_id=check_user.id)
+    img.save()
+    flash("image successfully uploaded","success")
+    return redirect(f'/users/{user_id}')
+    # except:
+    #     flash("Something went wrong. Please try again!","error")
+    #     return render_template('users/uploadimages.html')
 
 
 @login_manager.unauthorized_handler

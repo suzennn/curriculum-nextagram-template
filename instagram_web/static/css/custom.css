@@ -86,6 +86,13 @@ img{
   border: 3px solid gray;
   /* box-shadow: 0px 0px 0px 3px gray; */
 }
+@media(max-width:1000px){
+  .resize{
+    border: 3px solid gray;
+    height: 150px;
+    width: 150px;
+  }
+}
 .rm-padding{
   padding-left: 1px;
 }
@@ -113,4 +120,10 @@ img{
   left: 0;
   top: 0;
   opacity: 0;
+}
+
+/*image display*/
+#displayimg{
+  border: 4px solid black;
+  box-shadow: 0px 0px 10px 5px rgb(214, 212, 212);
 }

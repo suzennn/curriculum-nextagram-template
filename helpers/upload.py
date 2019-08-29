@@ -8,12 +8,12 @@ s3 = boto3.client(
     aws_secret_access_key = os.environ.get('S3_SECRET_ACCESS_KEY')
 )
 
-def upload():
+def upload(folder_path):
     file = request.files.get('user_file')
     s3.upload_fileobj(
         file,
         "nextagram-qwerty-flask",
-        file.filename,
+        f'{folder_path}/' + file.filename,
         ExtraArgs={
             "ACL": 'public-read',
             "ContentType" : file.content_type
