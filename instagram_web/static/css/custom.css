@@ -65,8 +65,9 @@ body{
   text-decoration: none;
   color: white;
 }
-.img-fit{
-  object-fit: fill;
+.titleerr{
+  color: rgb(231, 95, 95);
+  font-family: 'Leckerli One'
 }
 
 /*form container*/

@@ -68,9 +68,17 @@ def logout():
 def profile(user_id):
     return render_template("users/profile.html")
 
-@users_blueprint.route('/<username>', methods=["GET"])
-def show(username):
-    pass
+@users_blueprint.route('/search/<username>')
+def show_search(username):
+    user_view = user.User.get_or_none(user.User.username == username)
+    return render_template("users/othprofile.html", user_view = user_view)
+
+@users_blueprint.route('/search', methods=["POST"])
+def show():
+    username = request.form["user_search"]
+    user_view = user.User.get_or_none(user.User.username == username)
+    if user_view:
+        return redirect(url_for('users.show_search',username=user_view.username))
 
 # @users_blueprint.route('/', methods=["GET"])
 # def index():
@@ -130,17 +138,17 @@ def upload_img_form(user_id):
 @users_blueprint.route('/upload-image/<user_id>',methods=['POST'])
 @login_required
 def upload_img(user_id):
-    # try:
-    imgupload("user-images")
-    check_user = user.User.get(user.User.id == current_user.id)
-    file = request.files.get('user_file').filename
-    img = images.Image(path=file, user_id=check_user.id)
-    img.save()
-    flash("image successfully uploaded","success")
-    return redirect(f'/users/{user_id}')
-    # except:
-    #     flash("Something went wrong. Please try again!","error")
-    #     return render_template('users/uploadimages.html')
+    try:
+        imgupload("user-images")
+        check_user = user.User.get(user.User.id == current_user.id)
+        file = request.files.get('user_file').filename
+        img = images.Image(path=file, user_id=check_user.id)
+        img.save()
+        flash("image successfully uploaded","success")
+        return redirect(f'/users/{user_id}')
+    except:
+        flash("Something went wrong. Please try again!","error")
+        return render_template('users/uploadimages.html')
 
 
 @login_manager.unauthorized_handler

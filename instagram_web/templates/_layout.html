@@ -10,7 +10,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Leckerli+One|Pacifico|Ubuntu:300,300i,400,400i,700,700i&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
+    <!-- <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.ico') }}"> -->
+    <link rel="shortcut icon" href="https://files.gamebanana.com/img/ico/sprays/4fdf7f156ff7b.png">
     {% assets "home_css" %}
       <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
@@ -34,8 +35,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="type username..." aria-label="Search">
+          <form action="{{url_for('users.show')}}" class="form-inline my-2 my-lg-0" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <input class="form-control mr-sm-2" type="search" name="user_search" placeholder="type username..." aria-label="Search">
             <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
           </form>
           <li class="nav-item my-2">
