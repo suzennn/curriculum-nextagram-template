@@ -1,5 +1,5 @@
 from app import app
-from flask import Blueprint, render_template, request, redirect, flash, session, url_for
+from flask import Blueprint, render_template, request, redirect, flash, session, url_for, abort
 from models import *
 from werkzeug.security import check_password_hash
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required, UserMixin
@@ -79,6 +79,8 @@ def show():
     user_view = user.User.get_or_none(user.User.username == username)
     if user_view:
         return redirect(url_for('users.show_search',username=user_view.username))
+    else:
+        return abort(404)
 
 # @users_blueprint.route('/', methods=["GET"])
 # def index():
