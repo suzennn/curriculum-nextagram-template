@@ -1,20 +1,37 @@
 {% extends "_layout.html" %}
 {% block content %}
 <div class="container mt-5">
-    <div class="d-inline-flex border p-2 w-100 h-100">
-        <div class="col-md-3 d-flex justify-content-center border">
-            <div class="rounded-circle bg-dark" height="100px" width="100px">
-                Help
+    <div class="row">
+        <div class="d-inline-flex p-2 w-100 h-100">
+            <div class="col-md-3 d-flex justify-content-center flex-wrap">
+                {% if current_user.dp %}
+                <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/{{current_user.dp}}" class="rounded-circle dp-pic mb-2 resize" height="200px" width="200px">
+                {% else %}
+                <img src="https://bankwatch.org/wp-content/uploads/2018/03/Portrait_Placeholder.png" class="rounded-circle dp-pic mb-2 resize" height="200px" width="200px">
+                {% endif %}
+                <a class="link-color" href="{{url_for('users.upload',user_id=current_user.id)}}">
+                    <small class="font-weight-bold">Change Profile Image</small>
+                </a>
+            </div>
+            <div class="col-md-8">
+                <h6 class="pt-4 font-weight-bold pt-1">{{current_user.username}}</h6>
+                <br>
+                <br>
+                {% if current_user.bio %}
+                <p>{{current_user.bio}}</p>
+                {% else %}
+                <small class="text-placeholder font-italic">user currently does not have a bio</small>
+                {% endif %}
+            </div>
+            <div class="col-md-1 d-flex justify-content-center">
+                <a class="pt-3" href="/users/{{current_user.id}}/edit">          <!--Find out how to do this using url_for('')-->
+                    <img height="30px" width="30px" src="https://icon-library.net/images/settings-icon-png/settings-icon-png-24.jpg">
+                </a>
             </div>
         </div>
-        <div class="col-md-8 border">
-            <h6 class="font-weight-bold pt-1">{{current_user.username}}</h6>
-        </div>
-        <div class="col-md-1 d-flex justify-content-center border ">
-            <a href="/users/{{current_user.id}}/edit">          <!--Find out how to do this using url_for('')-->
-                <img height="30px" width="30px" src="https://icon-library.net/images/settings-icon-png/settings-icon-png-24.jpg">
-            </a>
-        </div>
+    </div>
+    <div class="row">
+
     </div>
 </div>
 {% endblock %}

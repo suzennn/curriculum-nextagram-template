@@ -1,14 +1,12 @@
 /*flash message*/
 .error{
-    background-color: rgba(248, 188, 207, 0.5);
+    background-color: rgb(230, 178, 195);
     color: firebrick;
-    opacity: 0.7;
     border-radius: 0;
   }
 .success{
     background-color: papayawhip;
     color: rgb(63, 63, 68);
-    opacity: 0.7;
     border-radius: 0;
   }
 
@@ -19,6 +17,8 @@
 }
 body{
     font-family: 'Ubuntu';
+    background: -webkit-linear-gradient(to top,#f7f7f7,#353b3b);
+    background: linear-gradient(to top,#f7f7f7,#353b3b)
 }
 .header{
     font-weight: 700;
@@ -27,6 +27,9 @@ body{
 .errtext{
   color: rgb(148, 149, 151);
 }
+.text-placeholder{
+  color: rgba(71, 71, 75, 0.623);
+}
 .btn-color{
   background-color:rgb(130, 211, 181);
   border: rgb(130, 211, 181);
@@ -34,6 +37,14 @@ body{
 }
 .btn-color:hover{ 
   background-color:rgb(78, 163, 132);
+}
+.link-color{
+  color: papayawhip;
+  text-decoration: none;
+}
+.link-color:hover{
+  text-decoration: none;
+  color: white;
 }
 
 /*error page*/
@@ -54,6 +65,9 @@ body{
   text-decoration: none;
   color: white;
 }
+.img-fit{
+  object-fit: fill;
+}
 
 /*form container*/
 .formContainer{
@@ -62,4 +76,41 @@ body{
 }
 .heightContainer{
   height: 87%;
+}
+
+/*images*/
+img{
+  object-fit: cover;
+}
+.dp-pic{
+  border: 3px solid gray;
+  /* box-shadow: 0px 0px 0px 3px gray; */
+}
+.rm-padding{
+  padding-left: 1px;
+}
+
+/*image file upload*/
+#dp {
+  border-radius: 10px;
+  border: 3px solid lightgray;
+}
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.upload-btn {
+  border: 2px solid lightgray;
+  color: gray;
+  background-color: rgb(218, 247, 201);
+  border-radius: 5px;
+  font-weight: bold;
+}
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
 }

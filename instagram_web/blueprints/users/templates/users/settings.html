@@ -3,8 +3,19 @@
 <div class="container-fluid d-inline-flex justify-content-center align-items-center w-100 heightContainer">
     <div class="card w-50 mt-1">
         <div class="card-body">
-            <h5 class="card-title font-weight-bold">{{current_user.username}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Edit Profile</h6>
+            <div class="d-inline-flex mb-2">
+                <div class="col-md-3 rm-padding">
+                    {% if current_user.dp %}
+                    <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/{{current_user.dp}}" class="rounded-circle dp-pic" height="50px" width="50px">
+                    {% else %}
+                    <img src="https://bankwatch.org/wp-content/uploads/2018/03/Portrait_Placeholder.png" class="rounded-circle dp-pic" height="50px" width="50px">
+                    {% endif %}
+                </div>
+                <div class="col-md-9">
+                    <h5 class="card-title font-weight-bold">{{current_user.username}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Edit Profile</h6>
+                </div>
+            </div>
             <form action="/users/{{current_user.id}}" method="post">       
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 <div class="form-group w-100">

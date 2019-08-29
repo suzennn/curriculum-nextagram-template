@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, redirect, flash, session,
 from models import *
 from werkzeug.security import check_password_hash
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required, UserMixin
+from helpers.upload import s3, upload as imgupload
 
 users_blueprint = Blueprint('users',
                             __name__,
@@ -71,10 +72,9 @@ def profile(user_id):
 def show(username):
     pass
 
-
-@users_blueprint.route('/', methods=["GET"])
-def index():
-    return "USERS"
+# @users_blueprint.route('/', methods=["GET"])
+# def index():
+#     return "USERS"
 
 @users_blueprint.route('/<id>/edit', methods=['GET'])
 @login_required
@@ -86,26 +86,41 @@ def edit(id):
 @login_required
 def update(id):
     check_user = user.User.get_by_id(id)
-    if check_user.name == request.form["name_edit"] and check_user.username == request.form["username_edit"] and check_user.bio == request.form["bio_edit"] and check_user.email == request.form["email_edit"]:
-        flash("nothing has been changed","error")
-        return redirect(f"/users/{id}/edit")
-    else:
-        if check_user.name != request.form["name_edit"]:
+    if check_user.id == current_user.id:
+        if check_user.name == request.form["name_edit"] and check_user.username == request.form["username_edit"] and check_user.bio == request.form["bio_edit"] and check_user.email == request.form["email_edit"]:
+            flash("nothing has been changed","error")
+            return redirect(f"/users/{id}/edit")
+        else:
             check_user.name = request.form["name_edit"]
-        if check_user.username != request.form["username_edit"]:
             check_user.username = request.form["username_edit"]
-        if check_user.bio != request.form["bio_edit"]:
             check_user.bio = request.form["bio_edit"]
-        if check_user.email != request.form["email_edit"]:
             check_user.email = request.form["email_edit"]
-    
+            if check_user.save():
+                flash("profile has been successfully updated", "success")
+                return redirect(url_for("users.profile",user_id=check_user.id))
+            else:
+                flash('<br>'.join(check_user.errors),'error')
+                return redirect(f"/users/{id}/edit")
+
+@users_blueprint.route('/upload/<user_id>')
+@login_required
+def upload_form(user_id):
+    return render_template('users/uploadimg.html')
+
+@users_blueprint.route('/upload/<user_id>',methods=['POST'])
+@login_required
+def upload(user_id):
     try:
-        if check_user.save():
-            flash("profile has been successfully updated", "success")
-            return redirect(url_for("users.profile",user_id=check_user.id))
+        imgupload()
+        check_user = user.User.get_by_id(user_id)
+        file = request.files.get('user_file').filename
+        check_user.dp = file
+        check_user.save()
+        flash("profile picture successfully changed","success")
+        return redirect(f'/users/{user_id}')
     except:
-        flash('<br>'.join(check_user.errors),'error')
-        return render_template("users/settings.html",errors=check_user.errors)
+        flash("Something went wrong. Please try again!","error")
+        return render_template('users/uploadimg.html')
 
 
 @login_manager.unauthorized_handler

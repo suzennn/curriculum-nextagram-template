@@ -1,0 +1,38 @@
+{% extends "_layout.html" %}
+{% block content %}
+<div class="container-fluid d-inline-flex justify-content-center align-items-center w-100 heightContainer">
+    <div class="card w-50 mt-1">
+        <div class="card-body mx-auto">
+            <h5 class="card-title font-weight-bold">{{current_user.username}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Change Profile Picture</h6>
+            <form action="{{ url_for('users.upload',user_id=current_user.id) }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <div class="upload-btn-wrapper mr-5">
+                    <button class="btn upload-btn">Choose file</button>
+                    <input type="file" name="user_file" id="files"/>
+                </div>
+                <img src="https://i.pinimg.com/236x/fc/7e/ce/fc7ece8e8ee1f5db97577a4622f33975--photo-icon-sad.jpg" alt="image preview" id="dp" class="my-2 ml-5" height=250px width=250px/>
+                <br></br>
+                <button class="btn btn-color text-light w-100" type="submit">Upload</button>
+            </form>
+            <button class="btn btn-danger w-100" type="submit">
+                <a href="{{ url_for('users.profile',user_id=current_user.id)}}" class="link-color text-light font-weight-bold">Cancel</a>
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    const input_file = document.getElementById("files")
+    input_file.addEventListener("change", function(){
+        const file = this.files[0];
+        if (file){
+            const reader = new FileReader();
+            reader.addEventListener("load", function(){
+                console.log(this)
+                document.getElementById("dp").src = this.result;
+            })
+            reader.readAsDataURL(file)
+        }
+    })
+</script>
+{% endblock %}
