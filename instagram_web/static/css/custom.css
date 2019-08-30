@@ -128,3 +128,16 @@ img{
   border: 4px solid black;
   box-shadow: 0px 0px 10px 5px rgb(214, 212, 212);
 }
+
+/*donate*/
+.btn-donate{
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+.btn-donate:hover{
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0px 0px 10px 5px rgb(214, 212, 212);
+}

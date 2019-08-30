@@ -16,7 +16,7 @@
                 <button class="btn btn-color text-light w-100" type="submit">Upload</button>
             </form>
             <button class="btn btn-danger w-100" type="submit">
-                <a href="{{ url_for('users.profile',user_id=current_user.id)}}" class="link-color text-light font-weight-bold">Cancel</a>
+                <a href="{{url_for('users.profile' , user_id=current_user.id)}}" class="link-color text-light font-weight-bold">Cancel</a>
             </button>
         </div>
     </div>

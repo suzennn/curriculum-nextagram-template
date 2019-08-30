@@ -1,0 +1,42 @@
+{% extends "_layout.html" %}
+{% block content %}
+<div class="d-inline-flex justify-content-center w-100 h-100">
+    <div class='my-5 formContainer d-inline-flex flex-wrap align-items-center'>
+        <h3 class="header mb-1 text-center w-100">How much would you like to donate?</h3>
+        <form class="w-100" id="payment-form" action="{{ url_for('create_checkout',image_id=image_id) }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <div class="form-group w-100">
+                <input type="number" step='.01' id="amount" name="amount" min=0.01 placeholder="please enter a value..." class="form-control"/>
+            </div>
+            <br>
+            <div class="bt-drop-in-wrapper">
+                <div id="bt-dropin"></div>
+            </div>
+            <input type="hidden" id="nonce" name="payment_method_nonce" />
+            <button id="donate" type='submit' class='btn btn-info btn-color w-100'>Donate</button>
+        </form>
+    </div>
+</div>
+
+<script>
+  form = document.querySelector('#payment-form');
+  client_token = '{{ client_token }}';
+  braintree.dropin.create({
+    authorization: client_token,
+    container: '#bt-dropin'
+  }, function (createErr, instance) {
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      instance.requestPaymentMethod(function (err, payload) {
+        if (err) {
+          console.log('Error', err);
+          return;
+        }
+        // Add the nonce to the form and submit
+        document.querySelector('#nonce').value = payload.nonce;
+        form.submit();
+      });
+    });
+  });
+</script>
+{% endblock %}

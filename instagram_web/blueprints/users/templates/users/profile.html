@@ -4,41 +4,50 @@
     <div class="row">
         <div class="d-inline-flex p-2 w-100 h-100">
             <div class="col-md-3 d-flex justify-content-center flex-wrap">
-                {% if current_user.dp %}
-                <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/profile-pic/{{current_user.dp}}" class="rounded-circle dp-pic mb-2 resize" height="200px" width="200px">
+                {% if user_view.dp %}
+                <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/profile-pic/{{user_view.dp}}" class="rounded-circle dp-pic mb-2 resize" height="200px" width="200px">
                 {% else %}
                 <img src="https://bankwatch.org/wp-content/uploads/2018/03/Portrait_Placeholder.png" class="rounded-circle dp-pic mb-2 resize" height="200px" width="200px">
                 {% endif %}
-                <a class="link-color" href="{{url_for('users.upload',user_id=current_user.id)}}">
+                {% if user_view.id == current_user.id %}
+                <a class="link-color" href="{{url_for('users.upload',user_id=user_view.id)}}">
                     <small class="font-weight-bold">Change Profile Image</small>
                 </a>
+                {% endif %}
             </div>
             <div class="col-md-8">
-                <h6 class="pt-4 font-weight-bold pt-1">{{current_user.username}}</h6>
+                <h6 class="pt-4 font-weight-bold pt-1">{{user_view.username}}</h6>
                 <br>
                 <br>
-                {% if current_user.bio %}
-                <p>{{current_user.bio}}</p>
+                {% if user_view.bio %}
+                <p>{{user_view.bio}}</p>
                 {% else %}
                 <small class="text-placeholder font-italic">user currently does not have a bio</small>
                 {% endif %}
             </div>
             <div class="col-md-1 d-flex flex-wrap justify-content-center">
-                <a class="pt-3 w-100" href="/users/{{current_user.id}}/edit">          <!--Find out how to do this using url_for('')-->
+                {% if user_view.id == current_user.id %}
+                <a class="pt-3 w-100" href="/users/{{user_view.id}}/edit">          <!--Find out how to do this using url_for('')-->
                     <img height="30px" width="30px" src="https://icon-library.net/images/settings-icon-png/settings-icon-png-24.jpg">
                 </a>
-                <a class="pt-5 w-100" href="{{url_for('users.upload_img',user_id=current_user.id)}}">          <!--Find out how to do this using url_for('')-->
+                <a class="pt-5 w-100" href="{{url_for('users.upload_img',user_id=user_view.id)}}">          <!--Find out how to do this using url_for('')-->
                     <img class="mt-5 pr-3" height="40px" width="40px" src="http://pluspng.com/img-png/free-png-plus-sign-plus-icon-512.png">
                 </a>
+                {% endif %}
             </div>
         </div>
     </div>
     <br>
-    {% if current_user.images%}
+    {% if user_view.images %}
         <div class="row mx-5">
-            {% for image in current_user.images %}
-                <div class="col-lg-4 col-md-6 pb-5 pb-sm-3 d-flex justify-content-center">
-                    <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/user-images/{{image.path}}" id="displayimg" height="300px" width="250px"/> 
+            {% for image in user_view.images %}
+                <div class="col-lg-4 col-md-6 pb-5 pb-sm-3 d-flex justify-content-center flex-wrap">
+                    <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/user-images/{{image.path}}" class="w-100" id="displayimg" height="300px" width="250px"/> 
+                    <button class="btn btn-color btn-donate mt-2 w-25">
+                        <a class="link-color text-light" href="{{url_for('users.new_checkout',image_id=image.id)}}">
+                            <small>Donate</small>
+                        </a>
+                    </button>
                 </div>
             {% endfor %}
         {% else %}

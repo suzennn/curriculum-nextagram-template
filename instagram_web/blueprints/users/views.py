@@ -1,9 +1,11 @@
+import braintree
 from app import app
 from flask import Blueprint, render_template, request, redirect, flash, session, url_for, abort
 from models import *
 from werkzeug.security import check_password_hash
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required, UserMixin
 from helpers.upload import s3, upload as imgupload
+from helpers.donate import TRANSACTION_SUCCESS_STATUSES, generate_client_token, transact, find_transaction
 
 users_blueprint = Blueprint('users',
                             __name__,
@@ -66,19 +68,15 @@ def logout():
 @users_blueprint.route('/<user_id>')
 @login_required
 def profile(user_id):
-    return render_template("users/profile.html")
-
-@users_blueprint.route('/search/<username>')
-def show_search(username):
-    user_view = user.User.get_or_none(user.User.username == username)
-    return render_template("users/othprofile.html", user_view = user_view)
+    user_view = user.User.get_or_none(user.User.id == user_id)
+    return render_template("users/profile.html", user_view = user_view)
 
 @users_blueprint.route('/search', methods=["POST"])
 def show():
     username = request.form["user_search"]
     user_view = user.User.get_or_none(user.User.username == username)
     if user_view:
-        return redirect(url_for('users.show_search',username=user_view.username))
+        return redirect(url_for('users.profile',user_id=user_view.id))
     else:
         return abort(404)
 
@@ -151,6 +149,52 @@ def upload_img(user_id):
     except:
         flash("Something went wrong. Please try again!","error")
         return render_template('users/uploadimages.html')
+
+@users_blueprint.route('/donate-to/<image_id>')
+@login_required
+def new_checkout(image_id):
+    client_token = generate_client_token()
+    return render_template("checkout/payment.html", client_token=client_token, image_id=image_id)
+
+@app.route('/checkout/<transaction_id>', methods=['GET'])
+@login_required
+def show_checkout(transaction_id):
+    transaction = find_transaction(transaction_id)
+    result = {}
+    if transaction.status in TRANSACTION_SUCCESS_STATUSES:
+        result = {
+            'header': 'Thank you for your generosity, you kind soul!',
+            'icon': 'success',
+            'message': 'Transaction has successfully gone through.'
+        }
+    else:
+        result = {
+            'header': 'Transaction Failed :(',
+            'icon': 'fail',
+            'message': 'Transaction has a status of ' + transaction.status + '.'
+        }
+
+    return render_template('checkout/show.html', transaction=transaction, result=result)
+
+@app.route('/checkout/<image_id>', methods=['POST'])
+@login_required
+def create_checkout(image_id):
+    result = transact({
+        'amount': request.form['amount'],
+        'payment_method_nonce': request.form['payment_method_nonce'],
+        'options':{
+            "submit_for_settlement": True
+        }
+    })
+    check_user =  user.User.get(user.User.id == current_user.id)
+
+    if result.is_success or result.transaction:
+        transact_user = transactions.Transaction(trans=result.transaction.id, user_id=check_user.id, image_id=image_id, amount=request.form['amount'])
+        transact_user.save()
+        return redirect(url_for('show_checkout',transaction_id=result.transaction.id))
+    else:
+        for x in result.errors.deep_errors: flash('Error: %s: %s' % (x.code, x.message))
+        return redirect(url_for('users.new_checkout'))
 
 
 @login_manager.unauthorized_handler
