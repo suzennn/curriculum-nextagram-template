@@ -189,11 +189,12 @@ def create_checkout(image_id):
     check_user =  user.User.get(user.User.id == current_user.id)
 
     if result.is_success or result.transaction:
+        flash("Transaction successful! Thanks so much :)","success")
         transact_user = transactions.Transaction(trans=result.transaction.id, user_id=check_user.id, image_id=image_id, amount=request.form['amount'])
         transact_user.save()
         return redirect(url_for('users.show_checkout',transaction_id=result.transaction.id))
     else:
-        for x in result.errors.deep_errors: flash('Error: %s: %s' % (x.code, x.message))
+        flash("Something went wrong! :( Please try again","error")
         return redirect(url_for('users.new_checkout'))
 
 

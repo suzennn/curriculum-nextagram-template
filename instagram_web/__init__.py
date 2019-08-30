@@ -17,7 +17,6 @@ def internal_server_error(e):
 def page_not_found(e):
     return render_template('404.html'), 404
 
-
 @app.route("/")
 def home():
     return render_template('home.html')

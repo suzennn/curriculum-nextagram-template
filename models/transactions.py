@@ -8,4 +8,4 @@ class Transaction(UserMixin,BaseModel):
     user = pw.ForeignKeyField(User,backref='transactions')
     image = pw.ForeignKeyField(Image,backref='transactions')
     trans = pw.CharField(null=True)
-    amount = pw.DecimalField(null=True)
+    amount = pw.DecimalField(null=True, decimal_places="2")
