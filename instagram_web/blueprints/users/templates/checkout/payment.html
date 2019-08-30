@@ -3,7 +3,7 @@
 <div class="d-inline-flex justify-content-center w-100 h-100">
     <div class='my-5 formContainer d-inline-flex flex-wrap align-items-center'>
         <h3 class="header mb-1 text-center w-100">How much would you like to donate?</h3>
-        <form class="w-100" id="payment-form" action="{{ url_for('create_checkout',image_id=image_id) }}" method="post">
+        <form class="w-100" id="payment-form" action="{{ url_for('users.create_checkout',image_id=image_id) }}" method="post">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             <div class="form-group w-100">
                 <input type="number" step='.01' id="amount" name="amount" min=0.01 placeholder="please enter a value..." class="form-control"/>

@@ -156,7 +156,7 @@ def new_checkout(image_id):
     client_token = generate_client_token()
     return render_template("checkout/payment.html", client_token=client_token, image_id=image_id)
 
-@app.route('/checkout/<transaction_id>', methods=['GET'])
+@users_blueprint.route('/checkout/<transaction_id>', methods=['GET'])
 @login_required
 def show_checkout(transaction_id):
     transaction = find_transaction(transaction_id)
@@ -176,7 +176,7 @@ def show_checkout(transaction_id):
 
     return render_template('checkout/show.html', transaction=transaction, result=result)
 
-@app.route('/checkout/<image_id>', methods=['POST'])
+@users_blueprint.route('/checkout/<image_id>', methods=['POST'])
 @login_required
 def create_checkout(image_id):
     result = transact({
@@ -191,7 +191,7 @@ def create_checkout(image_id):
     if result.is_success or result.transaction:
         transact_user = transactions.Transaction(trans=result.transaction.id, user_id=check_user.id, image_id=image_id, amount=request.form['amount'])
         transact_user.save()
-        return redirect(url_for('show_checkout',transaction_id=result.transaction.id))
+        return redirect(url_for('users.show_checkout',transaction_id=result.transaction.id))
     else:
         for x in result.errors.deep_errors: flash('Error: %s: %s' % (x.code, x.message))
         return redirect(url_for('users.new_checkout'))
