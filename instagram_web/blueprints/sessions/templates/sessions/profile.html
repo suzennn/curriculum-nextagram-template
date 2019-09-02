@@ -10,7 +10,7 @@
                 <img src="https://bankwatch.org/wp-content/uploads/2018/03/Portrait_Placeholder.png" class="rounded-circle dp-pic mb-2 resize" height="200px" width="200px">
                 {% endif %}
                 {% if user_view.id == current_user.id %}
-                <a class="link-color" href="{{url_for('users.upload',user_id=user_view.id)}}">
+                <a class="link-color" href="{{url_for('images.upload',user_id=user_view.id)}}">
                     <small class="font-weight-bold">Change Profile Image</small>
                 </a>
                 {% endif %}
@@ -30,7 +30,7 @@
                 <a class="pt-3 w-100" href="/users/{{user_view.id}}/edit">          <!--Find out how to do this using url_for('')-->
                     <img height="30px" width="30px" src="https://icon-library.net/images/settings-icon-png/settings-icon-png-24.jpg">
                 </a>
-                <a class="pt-5 w-100" href="{{url_for('users.upload_img',user_id=user_view.id)}}">          <!--Find out how to do this using url_for('')-->
+                <a class="pt-5 w-100" href="{{url_for('images.upload_img',user_id=user_view.id)}}">          <!--Find out how to do this using url_for('')-->
                     <img class="mt-5 pr-3" height="40px" width="40px" src="http://pluspng.com/img-png/free-png-plus-sign-plus-icon-512.png">
                 </a>
                 {% endif %}
@@ -44,7 +44,7 @@
                 <div class="col-lg-4 col-md-6 pb-5 pb-sm-3 d-flex justify-content-center flex-wrap">
                     <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/user-images/{{image.path}}" class="w-100" id="displayimg" height="300px" width="250px"/> 
                     <button class="btn btn-color btn-donate mt-2 w-25">
-                        <a class="link-color text-light" href="{{url_for('users.new_checkout',image_id=image.id)}}">
+                        <a class="link-color text-light" href="{{url_for('donations.new_checkout',image_id=image.id)}}">
                             <small>Donate</small>
                         </a>
                     </button>
