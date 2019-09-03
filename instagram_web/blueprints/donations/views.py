@@ -42,7 +42,6 @@ def show_checkout(transaction_id):
             'icon': 'fail',
             'message': 'Transaction has a status of ' + transaction.status + '.'
         }
-
     return render_template('donations/show.html', transaction=transaction, result=result)
 
 @donations_blueprint.route('/checkout/<image_id>', methods=['POST'])
@@ -55,16 +54,17 @@ def create_checkout(image_id):
             "submit_for_settlement": True
         }
     })
-    transaction = find_transaction(transaction_id)
-    check_user =  user.User.get(user.User.id == current_user.id)
-    check_image = images.Image.get(images.Image.id == image_id)
-    message = Mail(
-        from_email='communities@nextagram.com',
-        to_emails= check_user.email,
-        subject='Thank you for your kind contribution!',
-        html_content=render_template('donations/email.html',transaction=transaction,check_image=check_image))
 
     if result.is_success: 
+        transaction = find_transaction(result.transaction.id)
+        check_user =  user.User.get(user.User.id == current_user.id)
+        check_image = images.Image.get(images.Image.id == image_id)
+        donated_to = user.User.get_by_id(int(check_image.user_id))
+        message = Mail(
+            from_email='communities@nextagram.com',
+            to_emails= check_user.email,
+            subject='Thank you for your kind contribution!',
+            html_content=render_template('donations/email.html',transaction=transaction,check_image=check_image, donated_to=donated_to))
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)
         print(response.status_code)

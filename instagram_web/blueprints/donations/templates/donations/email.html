@@ -1,33 +1,101 @@
-<div class="container d-flex justify-content-center flex-wrap mt-5">
-    <h2 style="font-family:'Leckerli One'" class='w-100 text-center'>Nextagram</h2>
-    <div class="bg-dark text-light px-4 headertitle d-flex justify-content-center align-items-center">Thanks for your kind contribution!</div>
-    <div class="card cardContainer mt-3 text-center">
-        <div class="card-body">
-            <h5 style="font-weight:400">Purchase Details</h5>
-            <hr>
-            Thank you for contributing to ...
-            <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/user-images/{{check_image.path}}" id="displayimg" height="300px" width="250px"/>
-            <hr>
-            <table class="table table-striped">
-                <tbody>
-                    <tr>
-                    <th scope="row">ID</th>
-                    <td>{{ transaction.id }}</</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">Amount</th>
-                    <td>{{ transaction.amount }}</</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">Status</th>
-                    <td>{{ transaction.status }}</</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">Updated At</th>
-                    <td>{{ transaction.updated_at }}</</td>
-                    </tr>
-                </tbody>
-            </table>
+<style>
+body{
+    font-family: 'Londrina Solid'
+}
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+.htwoformat{
+    width: 100%;
+    text-align: center;
+}
+.headertitle{
+    height: 100px;
+    font-weight: 900;
+    font-size: 30px;
+    width: 51%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(41, 38, 38);
+    color: white;
+}
+.cardContainer{
+    font-weight: 300;
+    width: 51%;
+    margin-top: 20px;
+    text-align: center;
+}
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Email</title>
+    <link href="https://fonts.googleapis.com/css?family=Leckerli+One|Pacifico|Ubuntu:300,300i,400,400i,700,700i|Londrina+Solid:100,300,400,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2 style="font-family:'Leckerli One'" class='htwoformat'>Nextagram</h2>
+        <div class="headertitle">Thanks for your kind contribution!</div>
+        <div class="card cardContainer">
+            <div class="card-body">
+                <h5 style="font-weight:400">Purchase Details</h5>
+                <hr>
+                <h6>Thank you for contributing {{transaction.amount}} to {{donated_to.username}}</h6>
+                <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/user-images/{{check_image.path}}" id="displayimg" height="300px" width="250px"/>
+                <hr>
+                <table>
+                    <tbody>
+                        <tr>
+                        <th scope="row">ID</th>
+                        <td>{{ transaction.id }}</</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">Amount</th>
+                        <td>{{ transaction.amount }}</</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">Status</th>
+                        <td>{{ transaction.status }}</</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">Updated At</th>
+                        <td>{{ transaction.updated_at }}</</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+</body>
+</html>

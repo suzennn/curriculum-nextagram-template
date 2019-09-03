@@ -59,7 +59,7 @@ def edit(id):
 def update(id):
     check_user = user.User.get_by_id(id)
     if check_user.id == current_user.id:
-        if check_user.name == request.form["name_edit"] and check_user.username == request.form["username_edit"] and check_user.bio == request.form["bio_edit"] and check_user.email == request.form["email_edit"]:
+        if check_user.name == request.form["name_edit"] and check_user.username == request.form["username_edit"] and check_user.bio == request.form["bio_edit"] and check_user.email == request.form["email_edit"] and check_user.privacy_status == request.form["privacy_setting"]:
             flash("nothing has been changed","error")
             return redirect(f"/users/{id}/edit")
         else:
@@ -67,9 +67,10 @@ def update(id):
             check_user.username = request.form["username_edit"]
             check_user.bio = request.form["bio_edit"]
             check_user.email = request.form["email_edit"]
+            check_user.privacy_status = request.form["privacy_setting"]
             if check_user.save():
                 flash("profile has been successfully updated", "success")
-                return redirect(url_for("users.profile",user_id=check_user.id))
+                return redirect(url_for("sessions.profile",user_id=check_user.id))
             else:
                 flash('<br>'.join(check_user.errors),'error')
                 return redirect(f"/users/{id}/edit")
