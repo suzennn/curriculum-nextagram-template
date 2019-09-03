@@ -55,12 +55,14 @@ def create_checkout(image_id):
             "submit_for_settlement": True
         }
     })
+    transaction = find_transaction(transaction_id)
     check_user =  user.User.get(user.User.id == current_user.id)
+    check_image = images.Image.get(images.Image.id == image_id)
     message = Mail(
         from_email='communities@nextagram.com',
         to_emails= check_user.email,
-        subject='Sending with Twilio SendGrid is Fun',
-        html_content='<strong>and easy to do anywhere, even with Python</strong>')
+        subject='Thank you for your kind contribution!',
+        html_content=render_template('donations/email.html',transaction=transaction,check_image=check_image))
 
     if result.is_success: 
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))

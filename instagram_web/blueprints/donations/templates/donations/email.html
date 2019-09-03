@@ -1,0 +1,33 @@
+<div class="container d-flex justify-content-center flex-wrap mt-5">
+    <h2 style="font-family:'Leckerli One'" class='w-100 text-center'>Nextagram</h2>
+    <div class="bg-dark text-light px-4 headertitle d-flex justify-content-center align-items-center">Thanks for your kind contribution!</div>
+    <div class="card cardContainer mt-3 text-center">
+        <div class="card-body">
+            <h5 style="font-weight:400">Purchase Details</h5>
+            <hr>
+            Thank you for contributing to ...
+            <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/user-images/{{check_image.path}}" id="displayimg" height="300px" width="250px"/>
+            <hr>
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                    <th scope="row">ID</th>
+                    <td>{{ transaction.id }}</</td>
+                    </tr>
+                    <tr>
+                    <th scope="row">Amount</th>
+                    <td>{{ transaction.amount }}</</td>
+                    </tr>
+                    <tr>
+                    <th scope="row">Status</th>
+                    <td>{{ transaction.status }}</</td>
+                    </tr>
+                    <tr>
+                    <th scope="row">Updated At</th>
+                    <td>{{ transaction.updated_at }}</</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

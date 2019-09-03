@@ -1,7 +1,7 @@
 {% extends "_layout.html" %}
 {% block content %}
 <div class="d-inline-flex justify-content-center w-100 h-100">
-    <div class='my-5 formContainer d-inline-flex flex-wrap align-items-center'>
+    <div class='my-5 formContainer d-inline-flex flex-wrap align-items-center justify-content-center'>
         <h3 class="header mb-1 text-center w-100">Login</h3>
         <form class="w-100" action="{{ url_for("sessions.login_user_check") }}" method="post">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
@@ -14,6 +14,10 @@
             <br>
             <button type='submit' class='btn btn-info btn-color w-100'>Login</button>
         </form>
+        <a class="btn btn-dark" href="{{ url_for('sessions.google_login') }}">
+            <img src ="http://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png" height=20px width=20px/>
+            <small class="ml-1">Login With Google</small>
+        </a>
     </div>
 </div>
 {% endblock %}

@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, redirect, flash, session,
 from models import *
 from werkzeug.security import check_password_hash
 from flask_login import current_user, login_user, logout_user, login_required, UserMixin
+from helpers.google_oauth import oauth
 
 sessions_blueprint = Blueprint('sessions',
                             __name__,
@@ -72,6 +73,26 @@ def update(id):
             else:
                 flash('<br>'.join(check_user.errors),'error')
                 return redirect(f"/users/{id}/edit")
+
+@sessions_blueprint.route('/google_login/authorize', methods=['GET'])
+def authorize():
+    token = oauth.google.authorize_access_token()
+
+    if token:
+        email = oauth.google.get(
+            'https://www.googleapis.com/oauth2/v2/userinfo').json()['email']
+        check_user = user.User.get_or_none(user.User.email == email)
+        if not check_user:
+            flash('No user registered with this Google email!', 'error')
+            return redirect(url_for('sessions.login'))
+    login_user(check_user)
+    flash("Login successful! Welcome back~","success")
+    return redirect("/")
+
+@sessions_blueprint.route('/google_login', methods=['GET'])
+def google_login():
+        redirect_uri = url_for('sessions.authorize', _external=True)
+        return oauth.google.authorize_redirect(redirect_uri)
 
 @login_manager.unauthorized_handler
 def unauthorized_callback():

@@ -11,6 +11,7 @@ class User(UserMixin,BaseModel):
     password = pw.CharField(null=False)
     bio = pw.CharField(null=True)
     dp = pw.CharField(null=True)
+    privacy_status = pw.CharField(null=True)
 
     def validate(self):
         pattern_pwd = "(?=.*[A-Z])(?=.*[!@#$&*\^%\*\.])(?=.*[0-9])(?=.*[a-z]).{6,}$"

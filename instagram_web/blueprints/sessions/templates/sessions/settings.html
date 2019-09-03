@@ -34,6 +34,12 @@
                     <label for="email_edit">Email</label>
                     <input type="text" name="email_edit" placeholder="type email..." value="{{current_user.email}}" class="form-control"/>
                 </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="privacy_setting" value=""/>
+                        <small class="text-muted">set profile to <strong>private</strong></small>
+                    </label>
+                </div>
                 <br>
                 <button type="submit" class="btn btn-danger">Confirm Changes</button>
             </form>
