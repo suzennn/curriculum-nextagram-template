@@ -1,6 +1,7 @@
 from models.base_model import BaseModel
 from werkzeug.security import generate_password_hash
 from flask_login import UserMixin
+from playhouse.hybrid import hybrid_property
 import peewee as pw
 import re
 
@@ -35,3 +36,9 @@ class User(UserMixin,BaseModel):
             self.errors.append('Email is already in use')
         elif not self.id:
             self.password = generate_password_hash(self.password)
+
+    @hybrid_property
+    def following_images(self):
+        from models.images import Image
+        from models.follows import Follow
+        return (i for i in (Image.select().join(User,on=(Image.user_id == User.id)).join(Follow, on=(Image.user_id == Follow.user_id)).where(Follow.follower_id == self.id).order_by(Image.created_at.desc()))) 

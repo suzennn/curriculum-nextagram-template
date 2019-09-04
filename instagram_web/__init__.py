@@ -10,6 +10,8 @@ from instagram_web.blueprints.followers.views import followers_blueprint
 from flask_assets import Environment, Bundle
 from .util.assets import bundles
 from helpers.google_oauth import oauth
+from flask_login import current_user
+from models import *
 
 assets = Environment(app)
 assets.register(bundles)
@@ -32,5 +34,5 @@ def page_not_found(e):
 
 @app.route("/")
 def home():
-    return render_template('home.html')
+    return render_template('home.html',users=user.User)
     # return abort(500)

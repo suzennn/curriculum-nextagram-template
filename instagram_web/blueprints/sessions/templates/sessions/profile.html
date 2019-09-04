@@ -18,9 +18,23 @@
             <div class="col-md-8">
                 <h6 class="pt-4 font-weight-bold pt-1">{{user_view.username}}</h6>
                 <br>
+                <div class="row">
+                    <div class="d-flex align-items-center counter ml-3 mr-5">
+                        <p class="font-weight-bold">{{user_view.images.count()}}</p>
+                        <p>&nbsp Posts</p>
+                    </div>
+                    <div class="d-flex align-items-center counter mr-5">
+                        <p class="font-weight-bold">{{user_view.followers.count()}}</p>
+                        <p>&nbsp Followers</p>
+                    </div>
+                    <div class="d-flex align-items-center counter mr-5">
+                        <p class="font-weight-bold">{{user_view.users.count()}}</p>
+                        <p>&nbsp Following</p>
+                    </div>
+                </div>
                 <br>
                 {% if user_view.bio %}
-                <p>{{user_view.bio}}</p>
+                <p style="font-size:15px">{{user_view.bio}}</p>
                 {% else %}
                 <small class="text-placeholder font-italic">user currently does not have a bio</small>
                 {% endif %}
@@ -50,9 +64,10 @@
         </div>
     </div>
     <br>
-    {% if user_view.images %}
-        <div class="row mx-5">
-            {% for image in user_view.images %}
+    <div class="row mx-5 d-flex justify-content-center">
+        {% if check_following or user_view.id == current_user.id or not user_view.privacy_status or user_view.privacy_status =="public" %}
+            {% if user_view.images %}
+                {% for image in user_view.images %}
                 <div class="col-lg-4 col-md-6 pb-5 pb-sm-3 d-flex justify-content-center flex-wrap">
                     <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/user-images/{{image.path}}" class="w-100" id="displayimg" height="300px" width="250px"/> 
                     <button class="btn btn-color btn-donate mt-2 w-25">
@@ -61,12 +76,19 @@
                         </a>
                     </button>
                 </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <div class="d-flex flex-wrap justify-content-center">
+                    <h6 class="text-muted text-center w-100" style="font-family:'Leckerli One'">Nothing to see here~</h6>
+                    <img style="object-fit: fill" src="https://media1.giphy.com/media/SJmKVqLQXm5FiSMRi4/source.gif" height="170px" width="400px"/> 
+                </div>
+            {% endif %}
         {% else %}
             <div class="d-flex flex-wrap justify-content-center">
-                <h6 class="text-muted text-center w-100" style="font-family:'Leckerli One'">Nothing to see here~</h6>
-                <img style="object-fit: fill" src="https://media1.giphy.com/media/SJmKVqLQXm5FiSMRi4/source.gif" height="170px" width="400px"/> 
-            </div>
+                <h6 class="text-muted text-center w-100" style="font-family:'Leckerli One'">This account is private</h6>
+                <small class="text-muted text-center w-100" style="font-family:'Leckerli One'">Please follow this user to see their content</small>
+                <img style="object-fit: fill; opacity:0.5" src="https://www.dotperformance.com/assets/images/lock.gif" height="170px" width="200px"/> 
+            </div>     
         {% endif %}
     </div>
     <br>

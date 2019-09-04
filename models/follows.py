@@ -6,3 +6,4 @@ import peewee as pw
 class Follow(UserMixin,BaseModel):
     user_id = pw.ForeignKeyField(User,backref='followers')
     follower_id = pw.ForeignKeyField(User,backref='users')
+    status = pw.IntegerField(null=True)         #0: pending; 1: complete

@@ -23,6 +23,7 @@ body{
 .header{
     font-weight: 700;
     font-style: italic;
+    color: rgb(163, 157, 157);
 }
 .errtext{
   color: rgb(148, 149, 151);
@@ -153,11 +154,25 @@ img{
 }
 .btn-outline-follow{
   background: transparent;
-  color: rgb(88, 124, 240);
-  border-color: rgb(120, 150, 248);
+  color: rgb(51, 73, 143);
+  border-color: rgb(51, 73, 143);
 }
 .btn-outline-follow:hover{
   background: rgb(171, 166, 240);
   color: white;
   box-shadow: 0px 0px 10px 5px rgb(212, 212, 214);
+}
+
+/*count user items*/
+.counter{
+  height: 40px;
+}
+
+/*remove link hover effect*/
+.link-rm{
+  color: black;
+}
+.link-rm:hover{
+  color: black;
+  text-decoration-line: none;
 }

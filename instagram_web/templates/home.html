@@ -6,9 +6,41 @@
 {% endblock %}
 {% block content %}
 <div class="container-fluid">
-  <div class="d-flex justify-content-center">
+  <div class="d-flex align-items-center flex-column">
     {% if current_user.is_authenticated %}
-    <h1 class="header mt-3">Welcome, <span style="color:rgb(142, 209, 147)">{{current_user.name}}</span>!</h1>
+    <h1 class="header my-4">Welcome, <span style="color:rgb(142, 209, 147)">{{current_user.name}}</span>!</h1>
+    <div class="row w-100">
+      <div class="col-md-10 d-inline-flex mx-auto">
+        <div class="col-md-8">
+          {% for image in current_user.following_images %}
+            <div class="card mb-5 w-100">
+              <div class="card-header">
+                <a class="d-inline-flex align-items-center link-rm" href="/users/{{image.user_id}}">
+                  <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/profile-pic/{{users.get_by_id(image.user_id).dp}}" class="rounded-circle dp-pic" height="50px" width="50px">
+                  <h6 class="card-title font-weight-bold pt-2 pl-2">{{users.get_by_id(image.user_id).username}}</h6>
+                </a>
+              </div>
+              <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/user-images/{{image.path}}" height="600px"/>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="col-md-3 mx-auto">
+          <div class="row d-inline-flex align-items-center">
+            {% if current_user.dp %}
+            <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/profile-pic/{{current_user.dp}}" class="rounded-circle dp-pic" height="50px" width="50px">
+            {% else %}
+            <img src="https://bankwatch.org/wp-content/uploads/2018/03/Portrait_Placeholder.png" class="rounded-circle dp-pic" height="50px" width="50px">
+            {% endif %}
+            <h6 class="card-title font-weight-bold pt-2 pl-2" style="color: rgb(163, 157, 157)">{{current_user.username}}</h6>    
+          </div>
+          <div class="row my-3">
+            <div class="card w-100 p-2">
+                <small class="text-muted card-text font-weight-bold">Suggestions for you</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     {% else %}
     <h1 class="header mt-3">Homepage</h1>
     {% endif %}
