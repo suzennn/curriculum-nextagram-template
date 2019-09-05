@@ -66,14 +66,14 @@
               {% if current_user.pending_requests |list|length %}
                 {% for user in current_user.pending_requests %}
                 <div class="border-bottom d-inline-flex align-items-center justify-content-between pl-3 py-2 w-100">
-                  <div class="d-inline-flex align-items-center">
-                    {% if users.get_by_id(user.follower_id).dp %}
+                  {% if users.get_by_id(user.follower_id).dp %}
+                  <a href="{{url_for('sessions.profile',user_id=user.follower_id)}}" class="link-rm d-inline-flex align-items-center">
                     <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/profile-pic/{{users.get_by_id(user.follower_id).dp}}" class="rounded-circle dp-pic" height="50px" width="50px">
                     {% else %}
                     <img src="https://bankwatch.org/wp-content/uploads/2018/03/Portrait_Placeholder.png" class="rounded-circle dp-pic" height="50px" width="50px">
                     {% endif %}
                     <h6 class="card-title font-weight-bold pt-2 pl-2" style="color: rgb(163, 157, 157)">{{users.get_by_id(user.follower_id).username}}</h6>   
-                  </div>
+                  </a>
                   <div class="d-inline-flex align-items-center">
                     <form class="my-auto" action="{{url_for('followers.accept_request',follower_id=user.follower_id)}}" method="get">
                       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />

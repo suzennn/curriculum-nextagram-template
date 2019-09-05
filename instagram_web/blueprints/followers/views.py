@@ -42,7 +42,7 @@ def unfollow_user(user_id):
         unfollow_user.delete_instance()
         response = {
             "status": "success",
-            "new_follower_count": check_user.followers.count()
+            "new_follower_count": check_user.followers.where(follows.Follow.status==1).count()
         }
         flash(f"You have unfollowed {check_user.username}","success")
         return jsonify(response)
@@ -58,7 +58,7 @@ def accept_request(follower_id):
         update_follow.execute()
         response = {
             "status": "success",
-            "new_follower_count": check_user.followers.count()
+            "new_follower_count": check_user.followers.where(follows.Follow.status==1).count()
         }
         return jsonify(response)
     except:
@@ -72,7 +72,7 @@ def reject_request(follower_id):
         update_follow.execute()
         response = {
             "status": "success",
-            "new_follower_count": check_user.followers.count()
+            "new_follower_count": check_user.followers.where(follows.Follow.status==1).count()
         }
         return jsonify(response)
     except:

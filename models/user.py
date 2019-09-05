@@ -47,3 +47,18 @@ class User(UserMixin,BaseModel):
     def pending_requests(self):
         from models.follows import Follow
         return (u for u in (Follow.select().join(User, on=(User.id == Follow.user_id)).where(Follow.user_id == self.id, Follow.status == 0))) 
+    
+    @hybrid_property
+    def user_following(self):
+        from models.follows import Follow
+        return (u for u in (User.select().join(Follow, on=(User.id == Follow.user_id)).where(Follow.follower_id == self.id, Follow.status == 1))) 
+    
+    @hybrid_property
+    def user_followers(self):
+        from models.follows import Follow
+        return (u for u in (Follow.select().join(User, on=(User.id == Follow.user_id)).where(Follow.user_id == self.id, Follow.status == 1))) 
+
+    # @hybrid_property
+    # def user_suggestions(self):
+    #     from models.follows import Follow
+    #     return (s for s in (User.select().join(Follow, on=(User.id == Follow.user_id)).where(Follow.follower_id == self.id, User.id.not_in(Follow.select(Follow.user_id)))))

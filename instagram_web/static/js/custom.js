@@ -108,3 +108,68 @@ $(document).ready(function() {
         })
     })
 })
+
+//follow in homepage
+$(document).ready(function() {
+    $('.follow-link').on('click', function(e) {
+        e.preventDefault()
+        id_name = e.target.id.toString()
+        id_num = id_name.substring(7,id_name.length)
+        if($(`#${e.target.id}`).text() == "follow" && e.target.value != "private"){
+            $.ajax({
+                url: `/users/follow/${id_num}`,
+                method: 'GET',
+                beforeSend: function() {
+                $(`#${e.target.id}`)
+                    .prop('disabled', true)
+                    .text('loading...')
+                },
+                success: function(response) {
+                $('#followers-count').text(response.new_follower_count)
+                $(`#${e.target.id}`)
+                    .prop('disabled', false)
+                    .removeClass('text-primary')
+                    .addClass('text-dark')
+                    .text('unfollow')
+                }
+            })
+        } else if ($(`#${e.target.id}`).text() == "follow" && e.target.value == "private"){
+            $.ajax({
+                url: `/users/follow/${id_num}`,
+                method: 'GET',
+                beforeSend: function() {
+                $(`#${e.target.id}`)
+                    .prop('disabled', true)
+                    .text('Loading...')
+                },
+                success: function(response) {
+                $('#followers-count').text(response.new_follower_count)
+                $(`#${e.target.id}`)
+                    .prop('disabled', false)
+                    .removeClass('text-primary')
+                    .addClass('text-danger')
+                    .text('pending')
+                }
+            })          
+        } else{
+            $.ajax({
+                url: `/users/unfollow/${id_num}`,
+                method: 'GET',
+                beforeSend: function() {
+                $(`#${e.target.id}`)
+                    .prop('disabled', true)
+                    .text('Loading...')
+                },
+                success: function(response) {
+                $('#followers-count').text(response.new_follower_count)
+                $(`#${e.target.id}`)
+                    .prop('disabled', false)
+                    .removeClass('text-dark')
+                    .removeClass('text-danger')
+                    .addClass('text-primary')
+                    .text('follow')
+                }
+            })
+        }
+    })
+})
