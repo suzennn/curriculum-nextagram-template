@@ -51,9 +51,15 @@
                       {% endif %}
                       <small class="card-title font-weight-bold pt-2 pl-2" style="color: rgb(163, 157, 157)">{{user.username}}</small> 
                     </a>
-                    <a href="#" class="link-rm text-primary d-flex align-items-center mr-1" style="margin-top:-3px">
-                      <small class="font-weight-bold follow-link" value={{user.privacy_status}} id='follow-{{user.id}}'>follow</small>
+                    {% if follow.get_or_none(follow.user_id == user.id, follow.follower_id == current_user.id).status == 0 %}
+                    <a href="#" class="link-rm text-danger d-flex align-items-center mr-1" style="margin-top:-3px">
+                      <small class="font-weight-bold follow-link" title={{user.privacy_status}} id='follow-{{user.id}}'>pending</small>
                     </a>
+                    {% else %}
+                    <a href="#" class="link-rm text-primary d-flex align-items-center mr-1" style="margin-top:-3px">
+                      <small class="font-weight-bold follow-link" title={{user.privacy_status}} id='follow-{{user.id}}'>follow</small>
+                    </a>
+                    {% endif %}
                   </div>
                 {% endif %}
                 {% endfor %}

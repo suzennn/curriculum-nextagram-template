@@ -2,7 +2,7 @@
 $(document).ready(function() {
     $('.follow-click').on('click', function(e) {
         e.preventDefault()
-        if($('.follow-click').text() == "follow" && e.target.value != "private"){
+        if($('.follow-click').text() == "follow" && e.target.title != "private"){
             $.ajax({
                 url: `/users/follow/${e.target.id}`,
                 method: 'GET',
@@ -20,7 +20,7 @@ $(document).ready(function() {
                     .text('unfollow')
                 }
             })
-        } else if ($('.follow-click').text() == "follow" && e.target.value == "private"){
+        } else if ($('.follow-click').text() == "follow" && e.target.title == "private"){
             $.ajax({
                 url: `/users/follow/${e.target.id}`,
                 method: 'GET',
@@ -112,10 +112,11 @@ $(document).ready(function() {
 //follow in homepage
 $(document).ready(function() {
     $('.follow-link').on('click', function(e) {
+        console.log(e)
         e.preventDefault()
         id_name = e.target.id.toString()
         id_num = id_name.substring(7,id_name.length)
-        if($(`#${e.target.id}`).text() == "follow" && e.target.value != "private"){
+        if($(`#${e.target.id}`).text() == "follow" && e.target.title != "private"){
             $.ajax({
                 url: `/users/follow/${id_num}`,
                 method: 'GET',
@@ -133,14 +134,14 @@ $(document).ready(function() {
                     .text('unfollow')
                 }
             })
-        } else if ($(`#${e.target.id}`).text() == "follow" && e.target.value == "private"){
+        } else if ($(`#${e.target.id}`).text() == "follow" && e.target.title == "private"){
             $.ajax({
                 url: `/users/follow/${id_num}`,
                 method: 'GET',
                 beforeSend: function() {
                 $(`#${e.target.id}`)
                     .prop('disabled', true)
-                    .text('Loading...')
+                    .text('loading...')
                 },
                 success: function(response) {
                 $('#followers-count').text(response.new_follower_count)
