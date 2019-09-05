@@ -6,8 +6,8 @@
 {% endblock %}
 {% block content %}
 <div class="container-fluid">
+  <div style="height:20px"></div>
   <div class="d-flex align-items-center flex-column">
-    <div style="height:80px"></div>
     {% if current_user.is_authenticated %}
     <h1 class="header my-4">Welcome, <span style="color:rgb(142, 209, 147)">{{current_user.name}}</span>!</h1>
     <div class="row w-100 d-inline-flex mx-auto">
