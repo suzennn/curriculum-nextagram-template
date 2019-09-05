@@ -46,7 +46,7 @@ def logout():
 @login_required
 def profile(user_id):
     user_view = user.User.get_or_none(user.User.id == user_id)
-    check_following = follows.Follow.get_or_none(follows.Follow.user_id == user_view.id)
+    check_following = follows.Follow.get_or_none(follows.Follow.user_id == user_view.id, follows.Follow.follower_id == current_user.id)
     return render_template("sessions/profile.html", user_view = user_view, check_following = check_following)
 
 @sessions_blueprint.route('/<id>/edit', methods=['GET'])

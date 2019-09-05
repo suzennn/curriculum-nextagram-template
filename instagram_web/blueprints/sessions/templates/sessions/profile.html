@@ -24,7 +24,7 @@
                         <p>&nbsp Posts</p>
                     </div>
                     <div class="d-flex align-items-center counter mr-5">
-                        <p class="font-weight-bold">{{user_view.followers.count()}}</p>
+                        <p class="font-weight-bold" id="followers-count">{{user_view.followers.count()}}</p>
                         <p>&nbsp Followers</p>
                     </div>
                     <div class="d-flex align-items-center counter mr-5">
@@ -48,15 +48,20 @@
                     <img class="mt-5 pr-3" height="40px" width="40px" src="http://pluspng.com/img-png/free-png-plus-sign-plus-icon-512.png">
                 </a>
                 {% else %}
-                    {% if check_following %}
-                    <form class="d-flex align-items-center" action="{{url_for('followers.unfollow_user',user_id=user_view.id)}}" method="post">
+                    {% if check_following.status == 1 or not check_following %}
+                    <form class="d-flex align-items-center" action="{{url_for('followers.follow_user',user_id=user_view.id)}}" method="post">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                        <button type="submit" class="btn btn-outline-follow align-items-center h-20">unfollow</button>
+                        <button type="submit" id="{{user_view.id}}" value={{user_view.privacy_status}} class="follow-click btn btn-follow align-items-center h-20">follow</button>
+                    </form>
+                    {% elif check_following.status == 0 %}
+                    <form class="d-flex align-items-center" action="{{url_for('followers.follow_user',user_id=user_view.id)}}" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                        <button type="submit" id="{{user_view.id}}" value={{user_view.privacy_status}} class="follow-click btn btn-danger align-items-center h-20">pending approval</button>
                     </form>
                     {% else %}
                     <form class="d-flex align-items-center" action="{{url_for('followers.follow_user',user_id=user_view.id)}}" method="post">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                        <button type="submit" class="btn btn-follow align-items-center h-20">follow</button>
+                        <button type="submit" id="{{user_view.id}}" value={{user_view.privacy_status}} class="follow-click btn btn-outline-follow align-items-center h-20">unfollow</button>
                     </form>
                     {% endif %}
                 {% endif %}
@@ -65,7 +70,7 @@
     </div>
     <br>
     <div class="row mx-5 d-flex justify-content-center">
-        {% if check_following or user_view.id == current_user.id or not user_view.privacy_status or user_view.privacy_status =="public" %}
+        {% if check_following.status == 1 or user_view.id == current_user.id or not user_view.privacy_status or user_view.privacy_status =="public" %}
             {% if user_view.images %}
                 {% for image in user_view.images %}
                 <div class="col-lg-4 col-md-6 pb-5 pb-sm-3 d-flex justify-content-center flex-wrap">

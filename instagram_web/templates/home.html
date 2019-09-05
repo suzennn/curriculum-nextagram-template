@@ -16,7 +16,11 @@
             <div class="card mb-5 w-100">
               <div class="card-header">
                 <a class="d-inline-flex align-items-center link-rm" href="/users/{{image.user_id}}">
+                  {% if users.get_by_id(image.user_id).dp %}
                   <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/profile-pic/{{users.get_by_id(image.user_id).dp}}" class="rounded-circle dp-pic" height="50px" width="50px">
+                  {% else %}
+                  <img src="https://bankwatch.org/wp-content/uploads/2018/03/Portrait_Placeholder.png" class="rounded-circle dp-pic" height="50px" width="50px">
+                  {% endif %}
                   <h6 class="card-title font-weight-bold pt-2 pl-2">{{users.get_by_id(image.user_id).username}}</h6>
                 </a>
               </div>

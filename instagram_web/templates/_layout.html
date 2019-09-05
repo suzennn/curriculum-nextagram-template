@@ -54,7 +54,47 @@
               <img src="https://i1.wp.com/tavistockconsulting.co.uk/wp-content/uploads/2017/09/profile-icon-9.png?ssl=1" height=40px width=40px>
             </a>
           </li>
-          {% if session['user_id'] %}
+          {% if current_user.id %}
+          <li class="nav-item my-2 dropdown show">
+            <!-- <div > -->
+            <a href="#" role="button" id="dropdownRequest" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img class="mt-2 ml-2 mr-3 pt-2" style="object-fit:fill" src="https://www.jing.fm/clipimg/full/178-1781970_solid-black-heart-clipart-grey-heart-transparent-background.png" height=32px width=30px>
+            </a>
+            <!-- </div> -->
+
+            <div class="dropdown-menu dropdown-menu-right requests p-0" aria-labelledby="dropdownRequest">
+              {% if current_user.pending_requests |list|length %}
+                {% for user in current_user.pending_requests %}
+                <div class="border-bottom d-inline-flex align-items-center justify-content-between pl-3 py-2 w-100">
+                  <div class="d-inline-flex align-items-center">
+                    {% if users.get_by_id(user.follower_id).dp %}
+                    <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/profile-pic/{{users.get_by_id(user.follower_id).dp}}" class="rounded-circle dp-pic" height="50px" width="50px">
+                    {% else %}
+                    <img src="https://bankwatch.org/wp-content/uploads/2018/03/Portrait_Placeholder.png" class="rounded-circle dp-pic" height="50px" width="50px">
+                    {% endif %}
+                    <h6 class="card-title font-weight-bold pt-2 pl-2" style="color: rgb(163, 157, 157)">{{users.get_by_id(user.follower_id).username}}</h6>   
+                  </div>
+                  <div class="d-inline-flex align-items-center">
+                    <form class="my-auto" action="{{url_for('followers.accept_request',follower_id=user.follower_id)}}" method="get">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                      <button id="{{users.get_by_id(user.follower_id).id}}" class="btn btn-info mx-2 accept" type="submit">Accept</button>
+                    </form>
+                    <form class="my-auto" action="{{url_for('followers.reject_request',follower_id=user.follower_id)}}" method="get">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                      <button id="{{users.get_by_id(user.follower_id).id}}" class="btn btn-danger mr-3 reject" type="submit">Reject</button>
+                    </form>
+                  </div>
+                </div>
+                {% endfor %}
+              {% else %}
+              <div class="d-inline-flex align-items-center justify-content-center py-3 w-100">
+                <small class="font-italic font-weight-light text-muted">you have no pending requests</small>
+              </div>
+              {% endif %}
+            </div>
+
+          </li>
+
           <li class="nav-item my-3">
             <a class="nav-link" href="/users/logout">Logout</a>
           </li>
@@ -73,12 +113,14 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
-      <div class="alert alert-dismissible font-italic {{category}}" role="alert">
+    <div class="flash">
+      <div class="alert mb-0 alert-dismissible font-italic {{category}}" role="alert">
         <small class="mb-1">{{message | safe}}</small>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+    </div>
     {% endfor %}
     {% endif %}
     {% endwith %}

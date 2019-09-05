@@ -3,11 +3,13 @@
     background-color: rgb(230, 178, 195);
     color: firebrick;
     border-radius: 0;
+    border-bottom: 1px solid lightgray;
   }
-.success{
+  .success{
     background-color: papayawhip;
     color: rgb(63, 63, 68);
     border-radius: 0;
+    border-bottom: 1px solid lightgray;
   }
 
 /*fonts*/
@@ -175,4 +177,9 @@ img{
 .link-rm:hover{
   color: black;
   text-decoration-line: none;
+}
+
+/*requests*/
+.requests{
+  width: 400px;
 }

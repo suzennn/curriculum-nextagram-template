@@ -41,4 +41,9 @@ class User(UserMixin,BaseModel):
     def following_images(self):
         from models.images import Image
         from models.follows import Follow
-        return (i for i in (Image.select().join(User,on=(Image.user_id == User.id)).join(Follow, on=(Image.user_id == Follow.user_id)).where(Follow.follower_id == self.id).order_by(Image.created_at.desc()))) 
+        return (i for i in (Image.select().join(User,on=(Image.user_id == User.id)).join(Follow, on=(Image.user_id == Follow.user_id)).where(Follow.follower_id == self.id, Follow.status == 1).order_by(Image.created_at.desc()))) 
+    
+    @hybrid_property
+    def pending_requests(self):
+        from models.follows import Follow
+        return (u for u in (Follow.select().join(User, on=(User.id == Follow.user_id)).where(Follow.user_id == self.id, Follow.status == 0))) 
