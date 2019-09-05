@@ -59,7 +59,7 @@
                         <button type="submit" id="{{user_view.id}}" value={{user_view.privacy_status}} class="follow-click btn btn-danger align-items-center h-20">pending approval</button>
                     </form>
                     {% else %}
-                    <form class="d-flex align-items-center" action="{{url_for('followers.follow_user',user_id=user_view.id)}}" method="post">
+                    <form class="d-flex align-items-center" action="{{url_for('followers.unfollow_user',user_id=user_view.id)}}" method="post">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                         <button type="submit" id="{{user_view.id}}" value={{user_view.privacy_status}} class="follow-click btn btn-outline-follow align-items-center h-20">unfollow</button>
                     </form>

@@ -2,7 +2,7 @@
 $(document).ready(function() {
     $('.follow-click').on('click', function(e) {
         e.preventDefault()
-        if($('.follow-click').text() == "follow" && e.target.title != "private"){
+        if($('.follow-click').text() == "follow" && e.target.value != "private"){
             $.ajax({
                 url: `/users/follow/${e.target.id}`,
                 method: 'GET',
@@ -20,7 +20,7 @@ $(document).ready(function() {
                     .text('unfollow')
                 }
             })
-        } else if ($('.follow-click').text() == "follow" && e.target.title == "private"){
+        } else if ($('.follow-click').text() == "follow" && e.target.value == "private"){
             $.ajax({
                 url: `/users/follow/${e.target.id}`,
                 method: 'GET',

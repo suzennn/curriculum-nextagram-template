@@ -183,3 +183,31 @@ img{
 .requests{
   width: 400px;
 }
+
+.card-suggestion{
+  height: 177px;
+  overflow: auto;
+  padding: .5rem;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+}
+.card-suggestion::-webkit-scrollbar {
+  display: none;
+}
+.card-followers{
+  height: 200px;
+  overflow: auto;
+  padding: .5rem;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+}
+.card-followers::-webkit-scrollbar {
+  display: none;
+}
+
+@media(min-width:992px){
+  .fix-right{
+    position: fixed;
+    right: 0px;
+  }
+}
