@@ -70,6 +70,23 @@
     </div>
     {% else %}
     <h1 class="header mt-3">Homepage</h1>
+    <h5 class="font-weight-bold text-dark">List of Current Users</h5>
+    <div class="row w-100 justify-content-center">
+      {% for user in users %}
+      <div class="col-md-3 m-2">
+        <div class="card d-flex justify-content-center align-items-center">
+          <div class="card-header w-100">{{user.username}}</div>
+          <div class="card-body">
+              {% if user.dp %}
+              <img src="https://nextagram-qwerty-flask.s3.amazonaws.com/profile-pic/{{user.dp}}" class="rounded-circle dp-pic" height="100px" width="100px">
+              {% else %}
+              <img src="https://bankwatch.org/wp-content/uploads/2018/03/Portrait_Placeholder.png" class="rounded-circle dp-pic" height="100px" width="100px">
+              {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
     {% endif %}
   </div>
 </div>
