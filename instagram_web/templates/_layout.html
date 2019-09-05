@@ -77,11 +77,11 @@
                   <div class="d-inline-flex align-items-center">
                     <form class="my-auto" action="{{url_for('followers.accept_request',follower_id=user.follower_id)}}" method="get">
                       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                      <button id="{{users.get_by_id(user.follower_id).id}}" class="btn btn-info mx-2 accept" type="submit">Accept</button>
+                      <button id="accept-{{users.get_by_id(user.follower_id).id}}" class="btn btn-info mx-2 accept" type="submit">Accept</button>
                     </form>
                     <form class="my-auto" action="{{url_for('followers.reject_request',follower_id=user.follower_id)}}" method="get">
                       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                      <button id="{{users.get_by_id(user.follower_id).id}}" class="btn btn-danger mr-3 reject" type="submit">Reject</button>
+                      <button id="reject-{{users.get_by_id(user.follower_id).id}}" class="btn btn-danger mr-3 reject" type="submit">Reject</button>
                     </form>
                   </div>
                 </div>

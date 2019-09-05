@@ -53,6 +53,7 @@ def unfollow_user(user_id):
 @followers_blueprint.route('/accept-request/<follower_id>',methods=['get'])
 @login_required
 def accept_request(follower_id):
+    check_user = user.User.get_by_id(int(follower_id))
     update_follow = follows.Follow.update(status=1).where(follows.Follow.follower_id == follower_id, follows.Follow.user_id == current_user.id)
     try:
         update_follow.execute()
@@ -67,6 +68,7 @@ def accept_request(follower_id):
 @followers_blueprint.route('/reject-request/<follower_id>',methods=['get'])
 @login_required
 def reject_request(follower_id):
+    check_user = user.User.get_by_id(int(follower_id))
     update_follow = follows.Follow.update(status=2).where(follows.Follow.follower_id == follower_id, follows.Follow.user_id == current_user.id)
     try:
         update_follow.execute()

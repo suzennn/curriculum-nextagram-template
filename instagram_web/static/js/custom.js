@@ -64,9 +64,11 @@ $(document).ready(function() {
 // accept follow request
 $(document).ready(function() {
     $('.accept').on('click', function(e) {
+        id_name = e.target.id.toString()
+        id_num = id_name.substring(7,id_name.length)
         e.preventDefault()
         $.ajax({
-            url: `/users/accept-request/${e.target.id}`,
+            url: `/users/accept-request/${id_num}`,
             method: 'GET',
             beforeSend: function() {
             $(`#${e.target.id}`)
@@ -88,9 +90,11 @@ $(document).ready(function() {
 // reject follow request
 $(document).ready(function() {
     $('.reject').on('click', function(e) {
+        id_name = e.target.id.toString()
+        id_num = id_name.substring(7,id_name.length)
         e.preventDefault()
         $.ajax({
-            url: `/users/reject-request/${e.target.id}`,
+            url: `/users/reject-request/${id_num}`,
             method: 'GET',
             beforeSend: function() {
             $(`#${e.target.id}`)
