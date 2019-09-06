@@ -62,7 +62,8 @@
             </a>
             <!-- </div> -->
 
-            <div class="dropdown-menu dropdown-menu-right requests p-0" aria-labelledby="dropdownRequest">
+            <div class="dropdown-menu dropdown-menu-right requests p-0 mt-2" aria-labelledby="dropdownRequest">
+              <div class="border-bottom pl-3 py-2 font-italic text-muted font-weight-bold">Pending Requests</div>
               {% if current_user.pending_requests |list|length %}
                 {% for user in current_user.pending_requests %}
                 <div class="border-bottom d-inline-flex align-items-center justify-content-between pl-3 py-2 w-100">
@@ -115,6 +116,7 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
+    <div style="height:25px"></div>
     <div class="flash">
       <div class="alert mb-0 alert-dismissible font-italic {{category}}" role="alert">
         <small class="mb-1">{{message | safe}}</small>

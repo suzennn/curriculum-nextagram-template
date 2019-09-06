@@ -7,12 +7,10 @@
             <h6 class="card-subtitle mb-2 text-muted">Upload a new image</h6>
             <form action="{{ url_for('images.upload_img',user_id=current_user.id) }}" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                <div class="upload-btn-wrapper mr-5">
-                    <button class="btn upload-btn">Choose file</button>
+                <div class="upload-btn-wrapper mr-5 mx-auto d-flex justify-content-center align-items-center mb-3" id="dp"/>
+                    <img class="add-image" src="https://www.sccpre.cat/mypng/full/13-137282_computer-icons-camera-photography-area-text-png-add.png"/>
                     <input type="file" name="user_file" id="files"/>
                 </div>
-                <img src="https://i.pinimg.com/236x/fc/7e/ce/fc7ece8e8ee1f5db97577a4622f33975--photo-icon-sad.jpg" alt="image preview" id="dp" class="my-2 ml-5" height=250px width=250px/>
-                <br></br>
                 <button class="btn btn-color text-light w-100" type="submit">Upload</button>
             </form>
             <button class="btn btn-danger w-100" type="submit">
@@ -27,9 +25,10 @@
         const file = this.files[0];
         if (file){
             const reader = new FileReader();
+            const imagepath = URL.createObjectURL(file)
             reader.addEventListener("load", function(){
-                console.log(this)
-                document.getElementById("dp").src = this.result;
+                document.getElementsByClassName("add-image")[0].style.display = "none";
+                document.getElementById("dp").style.backgroundImage = `url(${imagepath})`;
             })
             reader.readAsDataURL(file)
         }
