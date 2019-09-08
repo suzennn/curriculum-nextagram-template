@@ -56,7 +56,7 @@ class User(UserMixin,BaseModel):
     @hybrid_property
     def user_followers(self):
         from models.follows import Follow
-        return (u for u in (Follow.select().join(User, on=(User.id == Follow.user_id)).where(Follow.user_id == self.id, Follow.status == 1))) 
+        return (u for u in (User.select().join(Follow, on=(User.id == Follow.follower_id)).where(Follow.user_id == self.id, Follow.status == 1))) 
 
     # @hybrid_property
     # def user_suggestions(self):
